@@ -200,3 +200,11 @@ suite may fail. Feel free to provide feedback / pull requests to improve it.
 The test suite requires sudo privileges in order to create files that
 cannot then be accessed. I could replace this with non-root privilege
 modification - and maybe I will - but not today.
+
+### Interactive Testing
+
+If you pass `TEST_INTERACTIVE=1` to test.sh, the automated tests will be
+followed by interactive tests which test the debug shell mechanisms.
+
+User input is required, following instructional prompts in order to
+properly validate the functionality.
