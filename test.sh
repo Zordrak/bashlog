@@ -29,8 +29,8 @@ function result() {
   esac;
 }
 
-sudo rm -f /tmp/${0}.log;
-sudo rm -f /tmp/${0}.log.json;
+sudo rm -f "/tmp/${0}.log";
+sudo rm -f "/tmp/${0}.log.json";
 
 source log.sh;
 
@@ -50,8 +50,8 @@ declare BASHLOG_SYSLOG=1;
 
 echo "Testing 'info'";
 
-rm -f /tmp/${0}.log;
-rm -f /tmp/${0}.log.json;
+rm -f "/tmp/${0}.log";
+rm -f "/tmp/${0}.log.json";
 
 BASHLOG_FILE=1;
 BASHLOG_JSON=1;
@@ -85,8 +85,8 @@ grep -q -E "$(basename ${0})\[${$}\]: INFO: ${random_string}$" <<<"${syslogout}"
 
 echo "Testing 'warn'";
 
-rm -f /tmp/${0}.log;
-rm -f /tmp/${0}.log.json;
+rm -f "/tmp/${0}.log";
+rm -f "/tmp/${0}.log.json";
 
 BASHLOG_FILE=1;
 BASHLOG_JSON=1;
@@ -120,8 +120,8 @@ grep -q -E "$(basename ${0})\[${$}\]: WARN: ${random_string}$" <<<"${syslogout}"
 
 echo "Testing: 'error'";
 
-rm -f /tmp/${0}.log;
-rm -f /tmp/${0}.log.json;
+rm -f "/tmp/${0}.log";
+rm -f "/tmp/${0}.log.json";
 
 BASHLOG_FILE=1;
 BASHLOG_JSON=1;
@@ -155,8 +155,8 @@ grep -q -E "$(basename ${0})\[${$}\]: ERROR: ${random_string}$" <<<"${syslogout}
 
 echo "Testing 'debug', DEBUG=0";
 
-rm -f /tmp/${0}.log;
-rm -f /tmp/${0}.log.json;
+rm -f "/tmp/${0}.log";
+rm -f "/tmp/${0}.log.json";
 
 BASHLOG_FILE=1;
 BASHLOG_JSON=1;
@@ -164,8 +164,8 @@ BASHLOG_SYSLOG=1;
 DEBUG=0;
 
 # If there's no output, there'll be no file
-touch /tmp/${0}.log;
-touch /tmp/${0}.log.json;
+touch "/tmp/${0}.log";
+touch "/tmp/${0}.log.json";
 
 stdout="$(log 'debug' "${random_string}")";
 fileout="$(tail -n1 /tmp/${0}.log)";
@@ -194,8 +194,8 @@ grep -q -E "$(basename ${0})\[${$}\]: DEBUG: ${random_string}$" <<<"${syslogout}
 
 echo "Testing 'debug', DEBUG=1";
 
-rm -f /tmp/${0}.log;
-rm -f /tmp/${0}.log.json;
+rm -f "/tmp/${0}.log";
+rm -f "/tmp/${0}.log.json";
 
 BASHLOG_FILE=1;
 BASHLOG_JSON=1;
@@ -229,8 +229,8 @@ grep -q -E "$(basename ${0})\[${$}\]: DEBUG: ${random_string}$" <<<"${syslogout}
 
 echo "Testing: BAD LEVEL ('snooch'), DEBUG=0";
 
-rm -f /tmp/${0}.log;
-rm -f /tmp/${0}.log.json;
+rm -f "/tmp/${0}.log";
+rm -f "/tmp/${0}.log.json";
 
 BASHLOG_FILE=1;
 BASHLOG_JSON=1;
@@ -264,8 +264,8 @@ grep -q -E "$(basename ${0})\[${$}\]: ERROR: Undefined log level trying to log: 
 
 echo "Testing: BAD LEVEL ('snooch'), DEBUG=1";
 
-rm -f /tmp/${0}.log;
-rm -f /tmp/${0}.log.json;
+rm -f "/tmp/${0}.log";
+rm -f "/tmp/${0}.log.json";
 
 BASHLOG_FILE=1;
 BASHLOG_JSON=1;
@@ -299,18 +299,18 @@ grep -q -E "$(basename ${0})\[${$}\]: ERROR: Undefined log level trying to log: 
 
 echo "Testing: 'info', IO Exception (file), DEBUG=0";
 
-rm -f /tmp/${0}.log;
+rm -f "/tmp/${0}.log";
 
 BASHLOG_FILE=1;
 BASHLOG_JSON=0;
 BASHLOG_SYSLOG=0;
 DEBUG=0;
 
-sudo touch /tmp/${0}.log;
+sudo touch "/tmp/${0}.log";
 
 stderr="$(log 'info' "${random_string}" 2>&1 1>/dev/null)";
 
-sudo rm -f /tmp/${0}.log;
+sudo rm -f "/tmp/${0}.log";
 
 grep -q -E $'^./log.sh: line [0-9]+: /tmp/'"$(basename ${0})"'.log: Permission denied' <<<"${stderr}" \
   && grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[INFO\] '"${random_string}"'" >> "/tmp/'"$(basename ${0})"$'.log"\033\[0m$' <<<"${stderr}" \
@@ -323,18 +323,18 @@ grep -q -E $'^./log.sh: line [0-9]+: /tmp/'"$(basename ${0})"'.log: Permission d
 
 echo "Testing: 'info', IO Exception (file), DEBUG=1";
 
-rm -f /tmp/${0}.log;
+rm -f "/tmp/${0}.log";
 
 BASHLOG_FILE=1;
 BASHLOG_JSON=0;
 BASHLOG_SYSLOG=0;
 DEBUG=1;
 
-sudo touch /tmp/${0}.log;
+sudo touch "/tmp/${0}.log";
 
 stderr="$(echo | log 'info' "${random_string}" 2>&1 1>/dev/null)";
 
-sudo rm -f /tmp/${0}.log;
+sudo rm -f "/tmp/${0}.log";
 
 grep -q -E $'^./log.sh: line [0-9]+: /tmp/'"$(basename ${0})"'.log: Permission denied' <<<"${stderr}" \
   && grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[INFO\] '"${random_string}"'" >> "/tmp/'"$(basename ${0})"$'.log"\033\[0m$' <<<"${stderr}" \
@@ -347,18 +347,18 @@ grep -q -E $'^./log.sh: line [0-9]+: /tmp/'"$(basename ${0})"'.log: Permission d
 
 echo "Testing: 'info', IO Exception (json), DEBUG=0";
 
-rm -f /tmp/${0}.log.json;
+rm -f "/tmp/${0}.log.json";
 
 BASHLOG_FILE=0;
 BASHLOG_JSON=1;
 BASHLOG_SYSLOG=0;
 DEBUG=0;
 
-sudo touch /tmp/${0}.log.json;
+sudo touch "/tmp/${0}.log.json";
 
 stderr="$(log 'info' "${random_string}" 2>&1 1>/dev/null)";
 
-sudo rm -f /tmp/${0}.log.json;
+sudo rm -f "/tmp/${0}.log.json";
 
 grep -q -E $'^./log.sh: line [0-9]+: /tmp/'"$(basename ${0})"'.log.json: Permission denied' <<<"${stderr}" \
   && grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "{"timestamp":"[0-9]{10}","level":"info","message":"'"${random_string}"'"}" >> "/tmp/'"$(basename ${0})"$'.log.json"\033\[0m$' <<<"${stderr}" \
@@ -371,18 +371,18 @@ grep -q -E $'^./log.sh: line [0-9]+: /tmp/'"$(basename ${0})"'.log.json: Permiss
 
 echo "Testing: 'info', IO Exception (json), DEBUG=1";
 
-rm -f /tmp/${0}.log.json;
+rm -f "/tmp/${0}.log.json";
 
 BASHLOG_FILE=0;
 BASHLOG_JSON=1;
 BASHLOG_SYSLOG=0;
 DEBUG=1;
 
-sudo touch /tmp/${0}.log.json;
+sudo touch "/tmp/${0}.log.json";
 
 stderr="$(echo | log 'info' "${random_string}" 2>&1 1>/dev/null)";
 
-sudo rm -f /tmp/${0}.log.json;
+sudo rm -f "/tmp/${0}.log.json";
 
 grep -q -E $'^./log.sh: line [0-9]+: /tmp/'"$(basename ${0})"'.log.json: Permission denied' <<<"${stderr}" \
   && grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "{"timestamp":"[0-9]{10}","level":"info","message":"'"${random_string}"'"}" >> "/tmp/'"$(basename ${0})"$'.log.json"\033\[0m$' <<<"${stderr}" \
@@ -395,18 +395,18 @@ grep -q -E $'^./log.sh: line [0-9]+: /tmp/'"$(basename ${0})"'.log.json: Permiss
 
 echo "Testing: 'warn', IO Exception (file), DEBUG=0";
 
-rm -f /tmp/${0}.log;
+rm -f "/tmp/${0}.log";
 
 BASHLOG_FILE=1;
 BASHLOG_JSON=0;
 BASHLOG_SYSLOG=0;
 DEBUG=0;
 
-sudo touch /tmp/${0}.log;
+sudo touch "/tmp/${0}.log";
 
 stderr="$(log 'warn' "${random_string}" 2>&1 1>/dev/null)";
 
-sudo rm -f /tmp/${0}.log;
+sudo rm -f "/tmp/${0}.log";
 
 grep -q -E $'^./log.sh: line [0-9]+: /tmp/'"$(basename ${0})"'.log: Permission denied' <<<"${stderr}" \
   && grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[WARN\] '"${random_string}"'" >> "/tmp/'"$(basename ${0})"$'.log"\033\[0m$' <<<"${stderr}" \
@@ -419,18 +419,18 @@ grep -q -E $'^./log.sh: line [0-9]+: /tmp/'"$(basename ${0})"'.log: Permission d
 
 echo "Testing: 'error', IO Exception (file), DEBUG=0";
 
-rm -f /tmp/${0}.log;
+rm -f "/tmp/${0}.log";
 
 BASHLOG_FILE=1;
 BASHLOG_JSON=0;
 BASHLOG_SYSLOG=0;
 DEBUG=0;
 
-sudo touch /tmp/${0}.log;
+sudo touch "/tmp/${0}.log";
 
 stderr="$(log 'error' "${random_string}" 2>&1 1>/dev/null)";
 
-sudo rm -f /tmp/${0}.log;
+sudo rm -f "/tmp/${0}.log";
 
 grep -q -E $'^./log.sh: line [0-9]+: /tmp/'"$(basename ${0})"'.log: Permission denied' <<<"${stderr}" \
   && grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] '"${random_string}"'" >> "/tmp/'"$(basename ${0})"$'.log"\033\[0m$' <<<"${stderr}" \
