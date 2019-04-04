@@ -31,6 +31,7 @@ function log() {
   local level="${1}";
   local upper="$(echo "${level}" | awk '{print toupper($0)}')";
   local debug_level="${DEBUG:-0}";
+  local exit_on_error="${BASHLOG_EXIT_ON_ERROR:-0}";
 
   shift 1;
 
@@ -120,6 +121,8 @@ function log() {
       if [ "${debug_level}" -gt 0 ]; then
         echo -e "Here's a shell to debug with. 'exit 0' to continue. Other exit codes will abort - parent shell will terminate.";
         bash || exit "${?}";
+      elif [ "${exit_on_error}" -gt 0 ]; then
+        exit 1;
       fi;
       ;;
     *)

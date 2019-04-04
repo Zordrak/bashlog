@@ -129,9 +129,16 @@ BASHLOG_SYSLOG=1;
 DEBUG=0;
 
 stderr="$(log 'error' "${random_string}" 2>&1 1>/dev/null)";
+exit_code="${?}";
 fileout="$(tail -n1 /tmp/${0}.log)";
 jsonout="$(tail -n1 /tmp/${0}.log.json)";
 syslogout="$(sudo tail -n1 /var/log/syslog)";
+
+if [ "${exit_code}" -eq 0 ]; then 
+  result ok 'error -> exit code 0';
+else 
+  result fail 'error -> exit code 0';
+fi
 
 grep -q -E $'^\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] '"${random_string}"$'\033\[0m$' <<<"${stderr}" \
   && result ok 'error -> stderr' \
@@ -436,6 +443,26 @@ grep -q -E $'^./log.sh: line [0-9]+: /tmp/'"$(basename ${0})"'.log: Permission d
   && grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] '"${random_string}"'" >> "/tmp/'"$(basename ${0})"$'.log"\033\[0m$' <<<"${stderr}" \
   && result ok 'error -> file, Permission denied -> stderr' \
   || result fail 'error -> file, Permission denied -> stderr';
+
+##
+# ERROR, EXIT ON ERROR ON
+##
+
+echo "Testing: 'error', BASHLOG_EXIT_ON_ERROR=1";
+
+BASHLOG_FILE=0;
+BASHLOG_JSON=0;
+BASHLOG_SYSLOG=0;
+BASHLOG_EXIT_ON_ERROR=1;
+DEBUG=0;
+
+stderr="$(log 'error' "${random_string}" 2>&1 1>/dev/null)";
+
+if [ "${?}" -eq 1 ]; then 
+  result ok 'error -> exit code 1';
+else 
+  result fail 'error -> exit code 1';
+fi
 
 ##
 # INTERACTIVE DEBUG
