@@ -141,6 +141,15 @@ When BASHLOG_SYSLOG=1, logs are written to Syslog.
 This determines the syslog tag to use, defaulting to the name of your script,
 e.g. `yourscript.sh`
 
+### BASHLOG_EXIT_ON_ERROR
+
+Default: `0`
+
+When BASHLOG_EXIT_ON_ERROR=1, `exit 1` will be called after logging an error.
+
+This will allow your script to exit automatically after logging an error. This feature
+is overriden when `DEBUG=1`.
+
 ## Recommended Usage
 
 ```
