@@ -76,7 +76,7 @@ function log() {
     fi;
 
     if [ "${file}" -eq 1 ]; then
-      local file_line="${date} [${upper}] ${line}";
+      local file_line="${date} [${upper}] "${BASH_SOURCE[1]}:"${BASH_LINENO}:\t${line}";
       echo -e "${file_line}" >> "${file_path}" \
         || _log_exception "echo -e \"${file_line}\" >> \"${file_path}\"";
     fi;
@@ -103,7 +103,7 @@ function log() {
   local norm="${colours['DEFAULT']}";
   local colour="${colours[${upper}]:-\033[31m}";
 
-  local std_line="${colour}${date} [${upper}] ${line}${norm}";
+  local std_line="${colour}${date} [${upper}] "${BASH_SOURCE[1]}:" ${BASH_LINENO}:\t${line}${norm}";
 
   # Standard Output (Pretty)
   case "${level}" in
