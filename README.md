@@ -74,6 +74,11 @@ If the command fails, the error message will show the precise command
 that failed, and when `DEBUG=1` will then present you with a debug
 shell from which you can choose to continue or to exit your script.
 
+Note that DEBUG traps are not normally inherited by shell functions,
+command substitutions, and commands executed in a subshell environment
+unless the shell option `functrace` is set
+(`set -T` or `set -o functrace` will accomplish this).
+
 #### Advanced Debugging
 
 This library contains an alternate debug trap that can be uncommented
