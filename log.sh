@@ -2,8 +2,6 @@
 
 set -uo pipefail
 
-script_name=$(basename "$0")
-
 function _log_exception() {
 	(
 		BASHLOG_FILE=0
@@ -15,18 +13,19 @@ function _log_exception() {
 }
 
 function log() {
+	local __log_sh_script_name__=$(basename "$0")
 	local date_format="${BASHLOG_DATE_FORMAT:-+%F %T}"
 	local date="$(date "${date_format}")"
 	local date_s="$(date "+%s")"
 
 	local file="${BASHLOG_FILE:-0}"
-	local file_path="${BASHLOG_FILE_PATH:-/tmp/${script_name}.log}"
+	local file_path="${BASHLOG_FILE_PATH:-/tmp/${__log_sh_script_name__}.log}"
 
 	local json="${BASHLOG_JSON:-0}"
-	local json_path="${BASHLOG_JSON_PATH:-/tmp/${script_name}.log.json}"
+	local json_path="${BASHLOG_JSON_PATH:-/tmp/${__log_sh_script_name__}.log.json}"
 
 	local syslog="${BASHLOG_SYSLOG:-0}"
-	local tag="${BASHLOG_SYSLOG_TAG:-${script_name}}"
+	local tag="${BASHLOG_SYSLOG_TAG:-${__log_sh_script_name__}}"
 	local facility="${BASHLOG_SYSLOG_FACILITY:-local0}"
 	local pid="$$"
 
