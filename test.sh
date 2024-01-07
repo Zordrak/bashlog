@@ -337,7 +337,7 @@ stderr="$(log 'info' "${random_string}" 2>&1 1>/dev/null)"
 
 sudo rm -f "${logfile}"
 
-grep -q -E $"^log.sh: line [0-9]+: ${logfile}: Permission denied" <<<"${stderr}" &&
+grep -q -E $"^*log.sh: line [0-9]+: ${logfile}: Permission denied" <<<"${stderr}" &&
 	grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[INFO\] '"${random_string}"'" >> "/tmp/'"${script_name}"$'.log"\033\[0m$' <<<"${stderr}" &&
 	result ok 'info -> file, Permission denied -> stderr' ||
 	result fail 'info -> file, Permission denied -> stderr'
@@ -361,7 +361,7 @@ stderr="$(echo | log 'info' "${random_string}" 2>&1 1>/dev/null)"
 
 sudo rm -f "${logfile}"
 
-grep -q -E $"^log.sh: line [0-9]+: ${logfile}: Permission denied" <<<"${stderr}" &&
+grep -q -E $"^*log.sh: line [0-9]+: ${logfile}: Permission denied" <<<"${stderr}" &&
 	grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[INFO\] '"${random_string}"'" >> "/tmp/'"${script_name}"$'.log"\033\[0m$' <<<"${stderr}" &&
 	result ok 'info -> file, Permission denied -> stderr' ||
 	result fail 'info -> file, Permission denied -> stderr'
@@ -385,7 +385,7 @@ stderr="$(log 'info' "${random_string}" 2>&1 1>/dev/null)"
 
 sudo rm -f "${logfile_json}"
 
-grep -q -E $"^log.sh: line [0-9]+: ${logfile_json}: Permission denied" <<<"${stderr}" &&
+grep -q -E $"^*log.sh: line [0-9]+: ${logfile_json}: Permission denied" <<<"${stderr}" &&
 	grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "{"timestamp":"[0-9]{10}","level":"info","message":"'"${random_string}"'"}" >> "/tmp/'"${script_name}"$'.log.json"\033\[0m$' <<<"${stderr}" &&
 	result ok 'info -> file, Permission denied -> stderr' ||
 	result fail 'info -> file, Permission denied -> stderr'
@@ -409,7 +409,7 @@ stderr="$(echo | log 'info' "${random_string}" 2>&1 1>/dev/null)"
 
 sudo rm -f "${logfile_json}"
 
-grep -q -E $"^log.sh: line [0-9]+: ${logfile_json}: Permission denied" <<<"${stderr}" &&
+grep -q -E $"^*log.sh: line [0-9]+: ${logfile_json}: Permission denied" <<<"${stderr}" &&
 	grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "{"timestamp":"[0-9]{10}","level":"info","message":"'"${random_string}"'"}" >> "/tmp/'"${script_name}"$'.log.json"\033\[0m$' <<<"${stderr}" &&
 	result ok 'info -> file, Permission denied -> stderr' ||
 	result fail 'info -> file, Permission denied -> stderr'
@@ -433,7 +433,7 @@ stderr="$(log 'warn' "${random_string}" 2>&1 1>/dev/null)"
 
 sudo rm -f "${logfile}"
 
-grep -q -E $"^log.sh: line [0-9]+: ${logfile}: Permission denied" <<<"${stderr}" &&
+grep -q -E $"^*log.sh: line [0-9]+: ${logfile}: Permission denied" <<<"${stderr}" &&
 	grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[WARN\] '"${random_string}"'" >> "/tmp/'"${script_name}"$'.log"\033\[0m$' <<<"${stderr}" &&
 	result ok 'warn -> file, Permission denied -> stderr' ||
 	result fail 'warn -> file, Permission denied -> stderr'
@@ -457,7 +457,7 @@ stderr="$(log 'error' "${random_string}" 2>&1 1>/dev/null)"
 
 sudo rm -f "${logfile}"
 
-grep -q -E $"^log.sh: line [0-9]+: ${logfile}: Permission denied" <<<"${stderr}" &&
+grep -q -E $"^*log.sh: line [0-9]+: ${logfile}: Permission denied" <<<"${stderr}" &&
 	grep -q -E $'\033\[31m[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] Logging Exception: echo -e "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \[ERROR\] '"${random_string}"'" >> "/tmp/'"${script_name}"$'.log"\033\[0m$' <<<"${stderr}" &&
 	result ok 'error -> file, Permission denied -> stderr' ||
 	result fail 'error -> file, Permission denied -> stderr'
